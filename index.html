@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cukiernia Słodkie Klimaty — Radzymin | Torty na Zamówienie, Ciasta, Desery</title>
+    <meta name="description" content="Domowe wypieki, torty na chrzciny, komunie i urodziny na zamówienie w Radzyminie. Cukiernia Słodkie Klimaty, ul. POW 12. Zamów online!">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- LocalBusiness Schema JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Bakery",
+      "name": "Cukiernia Słodkie Klimaty",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ul. Polskiej Organizacji Wojskowej 12",
+        "addressLocality": "Radzymin",
+        "postalCode": "05-250",
+        "addressCountry": "PL"
+      },
+      "telephone": "+48733550149",
+      "priceRange": "$$"
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Canvas for Floating Particle Background -->
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container top-bar__container">
+            <span>Radzymin, ul. Polskiej Organizacji Wojskowej 12 — Zamówienia indywidualne</span>
+            <a href="tel:+48733550149" class="top-bar__phone">Tel: +48 733 550 149</a>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="header" id="header">
+        <div class="container header__container">
+            <a href="#" class="brand">
+                SŁODKIE KLIMATY
+                <span class="brand__sub">CUKIERNIA RADZYMIN</span>
+            </a>
+
+            <nav class="nav" id="main-nav">
+                <a href="#catalog" class="nav__link">Oferta</a>
+                <a href="#calculator" class="nav__link">Kalkulator Tortu</a>
+                <a href="#about" class="nav__link">O nas</a>
+                <a href="#gallery" class="nav__link">Galeria</a>
+                <a href="#faq" class="nav__link">FAQ</a>
+                <a href="#contact" class="nav__link">Kontakt</a>
+                <button class="btn btn--primary open-drawer-btn mobile-nav-btn">ZAMÓW TORT</button>
+            </nav>
+
+            <div class="header__actions">
+                <button class="btn btn--primary open-drawer-btn desktop-nav-btn">ZAMÓW TORT</button>
+                <button class="burger" id="burger-btn" aria-label="Otwórz menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero bg-blush">
+
+        <div class="container hero__grid">
+            <div class="hero__content">
+                <span class="badge">Domowe Wypieki na Zamówienie</span>
+                <h1 class="hero__title">Torty i Desery <br><span class="text-accent">Tworzone z Pasją.</span></h1>
+                <p class="hero__desc">Wyjątkowe oprawy słodkie na Chrzciny, Komunie, Urodziny oraz Święta w Radzyminie. Naturalne składniki i niepowtarzalny smak domowych receptur.</p>
+                <div class="hero__buttons">
+                    <a href="#calculator" class="btn btn--primary btn--large">SKONFIGURUJ TORT</a>
+                    <a href="tel:+48733550149" class="btn btn--outline btn--large">ZADZWOŃ DO CUKIERNI</a>
+                </div>
+            </div>
+            <div class="hero__visual">
+                <div class="hero-card-preview">
+                    <div class="hero-card-inner">
+                        <span class="hero-card-tag">Oferta Specjalna</span>
+                        <h3>Torty Okolicznościowe</h3>
+                        <p>Indywidualne projekty dekoracji i tradycyjne domowe nadzienia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Price & Portion Calculator -->
+    <section class="calculator-section bg-white" id="calculator">
+        <div class="container">
+            <div class="section-heading text-center">
+                <span class="subtitle">OBLICZ POTRZEBNĄ MASĘ</span>
+                <h2 class="title">Kalkulator Zamówienia Tortu</h2>
+                <p class="subtitle-desc">Przesuń suwak, aby dobrać wagę tortu do liczby gości i poznać szacowany koszt.</p>
+            </div>
+
+            <div class="calculator-card">
+                <div class="calc-group">
+                    <div class="calc-label-row">
+                        <label for="portion-slider">Waga tortu / Liczba porcji:</label>
+                        <span id="slider-val-display" class="calc-badge-val">2.5 kg (ok. 15-18 porcji)</span>
+                    </div>
+                    <input type="range" id="portion-slider" min="1.5" max="10" step="0.5" value="2.5" class="calc-slider">
+                    <div class="slider-marks">
+                        <span>1.5 kg</span>
+                        <span>5.0 kg</span>
+                        <span>10.0 kg</span>
+                    </div>
+                </div>
+
+                <div class="calc-group">
+                    <label for="flavor-select">Wybierz smak i nadzienie:</label>
+                    <select id="flavor-select" class="calc-input">
+                        <option value="Malina-Smietanka">Malinowa Finezja (Mus malinowy + jasny biszkopt)</option>
+                        <option value="Czekolada-Wiśnia">Czekolada z Wiśnią (Ciemny biszkopt + belgijska czekolada)</option>
+                        <option value="Mango-Marakuja">Egzotyczne Mango-Marakuja (Krem śmietankowy)</option>
+                        <option value="Karmel-Chrupka">Słony Karmel z Chrupką Orzechową</option>
+                        <option value="Inny">Inny smak / Własna kompozycja [DO POTWIERDZENIA]</option>
+                    </select>
+                </div>
+
+                <div class="calc-group">
+                    <label for="calc-notes">Uwagi do dekoracji lub okazyjny napis:</label>
+                    <input type="text" id="calc-notes" class="calc-input" placeholder="np. Napis 'Chrzest Święty Leona' + żywe kwiaty">
+                </div>
+
+                <div class="calc-summary-box">
+                    <div class="calc-price-col">
+                        <span>Szacowany koszt:</span>
+                        <h3 id="calc-estimated-price">ok. 225 zł</h3>
+                    </div>
+                    <button class="btn btn--primary" id="calc-submit-btn">PRZEJDŹ DO ZAMÓWIENIA</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section with Tabs -->
+    <section class="catalog-section bg-vanilla" id="catalog">
+        <div class="container">
+            <div class="section-heading text-center">
+                <span class="subtitle">NASZA WITRYNA</span>
+                <h2 class="title">Katalog Wypieków</h2>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="torty">Torty na Zamówienie</button>
+                <button class="tab-btn" data-tab="ciasta">Domowe Ciasta</button>
+                <button class="tab-btn" data-tab="desery">Monodesery & Słodkości</button>
+                <button class="tab-btn" data-tab="sezonowe">Oferta Sezonowa</button>
+            </div>
+
+            <!-- Tab Content: Torty -->
+            <div class="tab-content active" id="tab-torty">
+                <div class="catalog-grid">
+                    <article class="product-card">
+                        <div class="product-card__placeholder">
+                            <span>Tort Okolicznościowy</span>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Chrzciny & Komunie</span>
+                            <h3>Torty Artystyczne</h3>
+                            <p>Delikatne biszkopty z masami na bazie śmietanki i świeżych owoców. Indywidualna dekoracja.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">od 90 zł / kg</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Tort Artystyczny">Zamów</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card__placeholder">
+                            <span>Tort Urodzinowy</span>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Urodziny</span>
+                            <h3>Torty Dziecięce i Tematyczne</h3>
+                            <p>Kolorowe wykończenia, ulubione postacie z bajek oraz naturalne barwniki spożywcze.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">od 95 zł / kg</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Tort Dziecięcy">Zamów</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card__placeholder">
+                            <span>Tort Bezowy</span>
+                        </div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Klasyka</span>
+                            <h3>Tort Bezowy Pavlova</h3>
+                            <p>Chrupiąca beza z puszystym kremem mascarpone i owocami sezonowymi.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">od 110 zł / szt.</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Tort Bezowy Pavlova">Zamów</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Tab Content: Ciasta -->
+            <div class="tab-content" id="tab-ciasta">
+                <div class="catalog-grid">
+                    <article class="product-card">
+                        <div class="product-card__placeholder"><span>Domowy Sernik</span></div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Wypieki Tradycyjne</span>
+                            <h3>Sernik Aksamitny</h3>
+                            <p>Tradycyjny sernik na spodem kruchym z polewą z czarnej czekolady.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">Cena [DO POTWIERDZENIA]</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Sernik Aksamitny">Zapytaj</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-card__placeholder"><span>Szarlotka</span></div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Tradycja</span>
+                            <h3>Szarlotka z Prażonym Jabłkiem</h3>
+                            <p>Kruche ciasto wypakowane po brzegi polskimi jabłkami z cynamonem.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">Cena [DO POTWIERDZENIA]</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Szarlotka">Zapytaj</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Tab Content: Desery -->
+            <div class="tab-content" id="tab-desery">
+                <div class="catalog-grid">
+                    <article class="product-card">
+                        <div class="product-card__placeholder"><span>Słodki Stół</span></div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Candy Bar</span>
+                            <h3>Pucharki i Desery Porcjowe</h3>
+                            <p>Słodkie kubeczki (panna cotta, tiramisu, musy owocowe) idealne na przyjęcia.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">od 12 zł / szt.</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Desery Porcjowe">Zamów</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Tab Content: Sezonowe -->
+            <div class="tab-content" id="tab-sezonowe">
+                <div class="catalog-grid">
+                    <article class="product-card">
+                        <div class="product-card__placeholder"><span>Wypieki Sezonowe</span></div>
+                        <div class="product-card__body">
+                            <span class="product-tag">Okres Świąteczny</span>
+                            <h3>Zestawy Świąteczne i Sezonowe</h3>
+                            <p>Autorskie mazurki, babki oraz ciasta przygotowywane na specjalne okazje kalendarzowe.</p>
+                            <div class="product-card__footer">
+                                <span class="product-price">Oferta Czasowa</span>
+                                <button class="btn btn--outline open-drawer-btn" data-product="Oferta Sezonowa">Szczegóły</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Timeline & Mastery) -->
+    <section class="about-section bg-white" id="about">
+        <div class="container about__grid">
+            <div class="about__content">
+                <span class="subtitle">NASZA PASJA I TRADYCJA</span>
+                <h2 class="title">Rzemieślnicze Wypieki z Radzymina</h2>
+                <p class="description">Cukiernia Słodkie Klimaty powstała z miłości do prawdziwego, domowego smaku. W naszej pracowni przy ul. POW 12 połączenie sprawdzonych receptur z estetyką daje wypieki, które zachwycają na każdym przyjęciu.</p>
+
+                <!-- Mastery Timeline -->
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-year">01</span>
+                        <div>
+                            <h4>Naturalne Składniki</h4>
+                            <p>Używamy prawdziwego masła, wiejskich jaj, świeżej śmietanki i naturalnych owoców bez sztucznych zamienników.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">02</span>
+                        <div>
+                            <h4>Ręczne Wykonanie</h4>
+                            <p>Każdy tort i ciasto dekorujemy ręcznie z dbałością o najmniejszy detal zamówienia.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">03</span>
+                        <div>
+                            <h4>Lokalna Społeczność</h4>
+                            <p>Wspieramy słodkie chwile mieszkańców Radzymina i okolic (Kąty Węgierskie i powiat wołomiński).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about__visual">
+                <div class="about-photo-frame">
+                    <span>Pracownia Cukierni<br>Słodkie Klimaty</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram-Style Gallery with Hover Overlay -->
+    <section class="gallery-section bg-blush" id="gallery">
+        <div class="container">
+            <div class="section-heading text-center">
+                <span class="subtitle">REALIZACJE</span>
+                <h2 class="title">Galeria Naszych Prac</h2>
+                <p class="subtitle-desc">Kliknij na zdjęcie, aby powiększyć podgląd wyrobu.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item open-lightbox" data-title="Tort na Chrzest Święty" data-desc="Nadzienie: Śmietanka z maliną, dekoracja z żywych kwiatów">
+                    <div class="gallery-item__placeholder"><span>Fotografia Tortu #1</span></div>
+                    <div class="gallery-item__overlay">
+                        <h4>Tort na Chrzest Święty</h4>
+                        <p>Nadzienie: Śmietanka z maliną</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item open-lightbox" data-title="Tort Komunijny" data-desc="Nadzienie: Mango-Marakuja, biała czekolada">
+                    <div class="gallery-item__placeholder"><span>Fotografia Tortu #2</span></div>
+                    <div class="gallery-item__overlay">
+                        <h4>Tort Komunijny Elegance</h4>
+                        <p>Nadzienie: Mango-Marakuja</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item open-lightbox" data-title="Monodesery i Słodki Stół" data-desc="Zestaw deserów porcjowych na przyjęcie">
+                    <div class="gallery-item__placeholder"><span>Fotografia Deserów #3</span></div>
+                    <div class="gallery-item__overlay">
+                        <h4>Słodki Stół</h4>
+                        <p>Desery porcjowe i babeczki</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item open-lightbox" data-title="Tort Urodzinowy" data-desc="Nadzienie: Słony karmel z chrupką orzechową">
+                    <div class="gallery-item__placeholder"><span>Fotografia Tortu #4</span></div>
+                    <div class="gallery-item__overlay">
+                        <h4>Tort Urodzinowy</h4>
+                        <p>Nadzienie: Słony karmel</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Searchable FAQ Accordion Section -->
+    <section class="faq-section bg-vanilla" id="faq">
+        <div class="container">
+            <div class="section-heading text-center">
+                <span class="subtitle">PYTANIA I ODPOWIEDZI</span>
+                <h2 class="title">Często Zadawane Pytania (FAQ)</h2>
+            </div>
+
+            <!-- Instant Search Input -->
+            <div class="faq-search-box">
+                <input type="text" id="faq-search-input" placeholder="Szukaj odpowiedzi (np. 'zadatek', 'termin', 'dostawa')...">
+            </div>
+
+            <div class="faq-accordion" id="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Z jakim wyprzedzeniem należy zamawiać tort?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Torty okolicznościowe (Chrzciny, Komunie) najlepiej zamawiać z wyprzedzeniem 2-3 tygodni. Na standardowe torty urodzinowe minimalny czas zamówienia wynosi 4-5 dni roboczych.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jak wygląda kwestia zadatku i płatności?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Po potwierdzeniu szczegółów zamówienia pobieramy zadatek w wysokości 30-50% wartości. Reszta kwoty regulowana jest przy odbiorze w cukierni.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Czy jest możliwa dostawa tortu na miejsce przyjęcia?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Standardowo zapraszamy do odbioru osobistego w cukierni w Radzyminie (ul. POW 12). W przypadku dużych tortów piętrowych dostawa ustalana jest indywidualnie [DO POTWIERDZENIA].</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jak przechowywać i transportować tort?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Wszystkie wypieki bazują na naturalnym masle i śmietance, dlatego wymagają przechowywania w lodówce w temperaturze 2-6°C. Podczas transportu pudełko należy stawiać na płaskiej powierzchni (np. podłoga auta).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Reviews Section (Baseline: 0 Reviews) -->
+    <section class="reviews-section bg-white" id="reviews">
+        <div class="container">
+            <div class="section-heading text-center">
+                <span class="subtitle">OPINIE KLIENTÓW</span>
+                <h2 class="title">Oceny i Komentarze</h2>
+                <div class="rating-summary" id="rating-summary">
+                    <span class="rating-score" id="rating-score">0.0</span>
+                    <span class="rating-stars" id="rating-stars">☆☆☆☆☆</span>
+                    <span class="rating-count" id="rating-count">(0 opinii)</span>
+                </div>
+            </div>
+
+            <div class="reviews-empty-box" id="reviews-empty-state">
+                <p>Bądź pierwszy, który zostawi opinię o naszych wypiekach!</p>
+                <button class="btn btn--outline" id="open-review-form-btn">Dodaj pierwszą opinię</button>
+            </div>
+
+            <!-- Review Input Form (Hidden initially) -->
+            <div class="review-form-wrapper" id="review-form-wrapper" style="display: none;">
+                <form id="add-review-form" class="review-form">
+                    <h3>Dodaj Opinię</h3>
+                    <div class="form-group">
+                        <label>Twoje Imię:</label>
+                        <input type="text" id="review-author" required placeholder="np. Anna">
+                    </div>
+                    <div class="form-group">
+                        <label>Ocena:</label>
+                        <select id="review-stars-input" required>
+                            <option value="5">★★★★★ (5/5)</option>
+                            <option value="4">★★☆☆☆ (4/5)</option>
+                            <option value="3">★★★☆☆ (3/5)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Komentarz:</label>
+                        <textarea id="review-text" required rows="3" placeholder="Opisz swoje wrażenia ze smaku i wyglądu tortu..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary">Opublikuj Opinię</button>
+                </form>
+            </div>
+
+            <!-- Dynamic Reviews List -->
+            <div class="reviews-grid" id="reviews-container"></div>
+        </div>
+    </section>
+
+    <!-- Verified Contact Section & Map -->
+    <section class="contact-section bg-vanilla" id="contact">
+        <div class="container contact__grid">
+            <div class="contact__info">
+                <span class="subtitle">KONTAKT I ODBIÓR</span>
+                <h2 class="title">Cukiernia w Radzyminie</h2>
+                
+                <ul class="contact-details">
+                    <li>
+                        <strong>Adres pracowni:</strong>
+                        <span>ul. Polskiej Organizacji Wojskowej 12, 05-250 Radzymin</span>
+                    </li>
+                    <li>
+                        <strong>Telefon do zamówień:</strong>
+                        <a href="tel:+48733550149" class="phone-link">+48 733 550 149</a>
+                    </li>
+                    <li>
+                        <strong>Godziny otwarcia:</strong>
+                        <span>Godziny otwarcia [DO POTWIERDZENIA]</span>
+                    </li>
+                    <li>
+                        <strong>Właściciel / Podmiot:</strong>
+                        <span>Cukiernia Słodkie Klimaty [DO POTWIERDZENIA]</span>
+                    </li>
+                </ul>
+
+                <button class="btn btn--primary open-drawer-btn" style="margin-top: 20px;">SKŁADAJ ZAMÓWIENIE ONLINE</button>
+            </div>
+
+            <div class="contact__map">
+                <!-- Google Maps Embed for ul. POW 12, Radzymin -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2432.22891!2d21.17834!3d52.41921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecbe8e1234567%3A0x123456789abcdef!2sPolskiej%20Organizacji%20Wojskowej%2012%2C%2005-250%20Radzymin!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Allergen Footnote -->
+    <footer class="footer bg-dark">
+        <div class="container footer__container">
+            <div class="footer__info">
+                <h3 class="footer__brand">Słodkie Klimaty</h3>
+                <p>Cukiernia Domowa — Radzymin, ul. POW 12</p>
+                <p>Tel: +48 733 550 149</p>
+            </div>
+            
+            <div class="footer__allergen-note">
+                <strong>Informacja o alergenach:</strong>
+                <p>Nasze wypieki mogą zawierać alergeny: gluten, jaja, mleko (laktozę), orzechy, soję. Pełny skład i specyfikacja każdego wyrobu dostępne są na zapytanie w pracowni.</p>
+            </div>
+        </div>
+        <div class="footer__bottom text-center">
+            <p>&copy; 2026 Cukiernia Słodkie Klimaty Radzymin. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <!-- Slide-Out Drawer Modal for Cake Orders -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer" id="drawer">
+        <button class="drawer-close" id="drawer-close" aria-label="Zamknij">&times;</button>
+        <div class="drawer-content">
+            <h3>Formularz Zamówienia Tortu</h3>
+            <p>Wypełnij szczegóły, а skontaktujemy się telefonicznie w celu potwierdzenia terminu.</p>
+
+            <form id="order-drawer-form" class="drawer-form">
+                <!-- Honeypot anti-spam trap -->
+                <input type="text" name="honeypot_trap" class="honeypot" tabindex="-1" autocomplete="off">
+
+                <div class="form-group">
+                    <label for="order-name">Imię i Nazwisko:</label>
+                    <input type="text" id="order-name" required placeholder="np. Jan Kowalski">
+                    <span class="error-text">Prosimy podać imię i nazwisko</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="order-phone">Numer Telefonu:</label>
+                    <input type="tel" id="order-phone" required placeholder="np. +48 700 800 900">
+                    <span class="error-text">Prosimy podać poprawny numer telefonu</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="order-date">Data Przyjęcia / Odbioru:</label>
+                    <input type="date" id="order-date" required>
+                    <span class="error-text">Prosimy wybrać datę odbioru</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="order-details">Specyfikacja / Wybrana opcja:</label>
+                    <textarea id="order-details" rows="3" readonly></textarea>
+                </div>
+
+                <button type="submit" class="btn btn--primary" style="width: 100%; margin-top: 10px;">WYŚLIJ ZAPYTANIE O TERMIN</button>
+                <div class="form-success-msg" id="form-success" style="display:none;">Dziękujemy! Formularz został wysłany. Skontaktujemy się telefonicznie.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Gallery Images -->
+    <div class="lightbox-modal" id="lightbox-modal">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <div class="lightbox-placeholder-img"><span>Podgląd Wypieku</span></div>
+            <div class="lightbox-caption">
+                <h3 id="lightbox-title">Tytuł Wypieku</h3>
+                <p id="lightbox-desc">Opis i nadzienie</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
